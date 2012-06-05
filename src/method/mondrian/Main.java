@@ -12,10 +12,13 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.TextInputFormat;
 import org.apache.hadoop.mapred.TextOutputFormat;
 
+import database.Tuple;
+
 /**
  * Main class for running Mondrian algorith in a distributed way.
  * */
 public class Main {
+	private static String qid="1 2 3 4 5 6 7 8";
 
 	/**
 	 * @param args
@@ -29,9 +32,13 @@ public class Main {
 		
 		JobConf conf = new JobConf();
 		conf.setJobName("mondrian");
+		conf.set("qid", qid);
 		
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(IntWritable.class);
+		
+		conf.setMapOutputKeyClass(IntWritable.class);
+		conf.setMapOutputValueClass(Tuple.class);
 		
 		conf.setMapperClass(MondrianMapper.class);
 		conf.setReducerClass(MondrianReducer.class);
